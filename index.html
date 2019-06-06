@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Bartimes</title>
+    <link rel="icon" href="favicon.png">
+    <style>
+        body {
+            background: #444;
+            color: #aaa;
+            padding-top: 20%;
+            text-align: center;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1 id="output">loading ...</h1>
+    </main>
+</body>
+
+<script src="web3.min.js"></script>
+<script>
+    // Create a web3 object by supplying a node to use.
+    const web3 = new Web3(new Web3.providers.HttpProvider("https://aion.api.nodesmith.io/v1/mastery/jsonrpc?apiKey=ab40c8f567874400a69c1e80a1399350"));
+
+    // Set an account to use for this application.
+    const account = web3.eth.accounts.privateKeyToAccount("4b45d22a2f042d9822f144de9de85bb2171f94f5ac5a6530a3a8103fcd6f547412b179b3b0692e48e5e5b9e683194c3b1e5f88658fe530346ccf3d502066aaf3");
+
+    // Set the address where the contract is deployed to.
+    const contractAddress = "0xa03adcfa2943612608c3e26f972bce65ecd3052be944952d8be42ae740007b91";
+
+    // Set todays day as a number.
+    const day = new Date().getDay()
+
+    // Get the value of the myStr variable from within the HelloAvm.java contract.
+    async function getOffer() {
+
+        // Create the Transaction Object
+        let data = web3.avm.contract
+            .method("getOffers")
+            .inputs(["int"], [day])
+            .encode();
+
+        const transactionObject = {
+            from: account.address,
+            to: contractAddress,
+            data: data,
+            gasPrice: 10000000000,
+            gas: 2000000,
+            type: "0x1"
+        };
+
+        // Send the call to the network and wait for a response.
+        let initialResponse = await web3.eth.call(transactionObject);
+        let avmResponse = await web3.avm.contract.decode("string", initialResponse);
+
+        // Print the response to the frontend, and the time it was updated.
+        document.querySelector("#output").innerHTML = avmResponse;
+    }
+
+    // Call the getOffer function as soon as the page has loaded.
+    window.onload = function() {
+        getOffer();
+    };
+</script>
+</html>
