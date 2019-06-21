@@ -24,13 +24,13 @@
 <script src="web3.min.js"></script>
 <script>
     // Create a web3 object by supplying a node to use.
-    const web3 = new Web3(new Web3.providers.HttpProvider("https://aion.api.nodesmith.io/v1/mastery/jsonrpc?apiKey=ab40c8f567874400a69c1e80a1399350"));
+    const web3 = new Web3(new Web3.providers.HttpProvider("https://aion.api.nodesmith.io/v1/mainnet/jsonrpc?apiKey=ab40c8f567874400a69c1e80a1399350"));
 
     // Set an account to use for this application.
-    const account = web3.eth.accounts.privateKeyToAccount("4b45d22a2f042d9822f144de9de85bb2171f94f5ac5a6530a3a8103fcd6f547412b179b3b0692e48e5e5b9e683194c3b1e5f88658fe530346ccf3d502066aaf3");
+    const account = web3.eth.accounts.privateKeyToAccount("084898cbec513df90e9de20261db58334c45a4397e068871a46074c7debb9f38c34d3d452c397587de77b59e4a8179e49b4a65f7e7282a28c5934cc50d48060e");
 
     // Set the address where the contract is deployed to.
-    const contractAddress = "0xa03adcfa2943612608c3e26f972bce65ecd3052be944952d8be42ae740007b91";
+    const contractAddress = "0xa0a4c3b17c83a4f193d8b84135e87d4dc536847bdbbeecc236730ef61b34f08c";
 
     // Set todays day as a number.
     const day = new Date().getDay()
